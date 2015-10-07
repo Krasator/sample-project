@@ -1,0 +1,40 @@
+body{
+    background-color: #ccc;
+}
+a{
+    cursor: pointer;
+}
+
+.navbar{
+    border-radius: 0;
+    box-shadow: 0 0 10px #333;
+}
+
+.content{
+    max-width: 1200px;
+    background-color: #fff;
+    margin: 0 auto;
+    padding: 30px 10px 10px 10px;
+}
+
+.person-list em{
+    font-weight: bold;
+}
+.sortable:hover{
+    cursor: pointer;
+    background-color: #ddd;
+}
+
+.loader{
+    font-size: 20px;
+    font-weight: bold;
+    color: #999;
+    width: 100%;
+    padding: 140px 0;
+}
+
+.current-page{
+    cursor: default;
+    color: rgb(51, 51, 51) !important;
+    font-weight: bold;
+}

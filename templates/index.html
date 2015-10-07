@@ -1,0 +1,122 @@
+<!doctype html>
+<html ng-app="testApp">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Test project</title>
+        <meta name="description" content="Test project for RedMob">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+        <link rel="stylesheet" href="%% url_for('static', filename='css/main.css') %%">
+    </head>
+
+
+    <body ng-controller="mainCtrl">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">Test project</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <form class="navbar-form navbar-right" role="search" ng-submit="search(query)">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search..." ng-model="query">
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+
+        <div class="content">
+            <div class="container-fluid">
+                <div class="table-responsive person-list">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th ng-click="sort('id')" class="sortable">
+                                    ID
+                                    <span ng-show="params.sort === 'id'">
+                                        <span ng-show="params.order === 'asc'" class="glyphicon glyphicon-sort-by-order"></span>
+                                        <span ng-show="params.order === 'desc'" class="glyphicon glyphicon-sort-by-order-alt"></span>
+                                    </span>
+                                    <span ng-show="params.sort !== 'id'">
+                                        <span class="glyphicon glyphicon-sort"></span>
+                                    </span>
+                                </th>
+                                <th ng-click="sort('last_name')" class="sortable">
+                                    Last name
+                                    <span ng-show="params.sort === 'last_name'">
+                                        <span ng-show="params.order === 'asc'" class="glyphicon glyphicon-sort-by-alphabet"></span>
+                                        <span ng-show="params.order === 'desc'" class="glyphicon glyphicon-sort-by-alphabet-alt"></span>
+                                    </span>
+                                    <span ng-show="params.sort !== 'last_name'">
+                                        <span class="glyphicon glyphicon-sort"></span>
+                                    </span>
+                                </th>
+                                <th ng-click="sort('first_name')" class="sortable">
+                                    First name
+                                    <span ng-show="params.sort === 'first_name'">
+                                        <span ng-show="params.order === 'asc'" class="glyphicon glyphicon-sort-by-alphabet"></span>
+                                        <span ng-show="params.order === 'desc'" class="glyphicon glyphicon-sort-by-alphabet-alt"></span>
+                                    </span>
+                                    <span ng-show="params.sort !== 'first_name'">
+                                        <span class="glyphicon glyphicon-sort"></span>
+                                    </span>
+                                </th>
+                                <th ng-click="sort('telephone')" class="sortable">
+                                    Telephone
+                                    <span ng-show="params.sort === 'telephone'">
+                                        <span ng-show="params.order === 'desc'" class="glyphicon glyphicon-sort-by-order"></span>
+                                        <span ng-show="params.order === 'asc'" class="glyphicon glyphicon-sort-by-order-alt"></span>
+                                    </span>
+                                    <span ng-show="params.sort !== 'telephone'">
+                                        <span class="glyphicon glyphicon-sort"></span>
+                                    </span>
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody ng-hide="loading">
+                            <tr ng-repeat="person in persons">
+                                <td ng-bind-html="::person.id"></td>
+                                <td ng-bind-html="::person.last_name"></td>
+                                <td ng-bind-html="::person.first_name"></td>
+                                <td ng-bind-html="::person.telephone"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="text-center loader" ng-show="loading">
+                        Loading, please wait
+                    </div>
+
+                    <div class="text-center" ng-hide="loading || pages.length === 1">
+                        <nav>
+                            <ul class="pagination">
+                                <li ng-repeat="page in pages">
+                                    <a ng-click="setPage(page)" ng-class="{ 'current-page': page === params.page }">{{page}}</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>  
+            </div>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha256-Sk3nkD6mLTMOF0EOpNtsIry+s1CsaqQC1rVLTAy+0yc= sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-sanitize.min.js"></script>
+        <script src="%% url_for('static', filename='js/app.js') %%"></script>
+    </body>
+</html>
